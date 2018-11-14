@@ -5,7 +5,15 @@ class bancodados
 {
     function Conectar()
     {
-        $mysqli = null;
+	$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
+	$server = $url["host"];
+	$username = $url["user"];
+	$password = $url["pass"];
+	$db = substr($url["path"], 1);
+
+	$mysqli = null;
+	$mysqli = new \mysqli($server, $username, $password, $db);
 /*
         if (PHP_OS == 'WINNT')
         {
@@ -18,7 +26,7 @@ class bancodados
             $mysqli = new \mysqli("localhost", "root", "root", "prjtrls", 8889);
         }
  */
-        $mysqli = new \mysqli(getenv("DB_HOST"), getenv("DB_USERNAME"), trim(getenv("DB_PASSWORD")), getenv("DB_DATABASE"));
+        //$mysqli = new \mysqli(getenv("DB_HOST"), getenv("DB_USERNAME"), trim(getenv("DB_PASSWORD")), getenv("DB_DATABASE"));
 
         $mysqli->set_charset("utf8");
 
